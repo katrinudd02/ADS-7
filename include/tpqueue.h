@@ -5,32 +5,33 @@
 #include <vector>
 #include <string>
 
-template<typename T>
+template<class T>
 class TPQueue {
-  // реализация шаблона очереди с приоритетом на связанном списке
- public:
-     PQueue():head(nullptr), tail(nullptr){}
-     ~TPQueue();
-     void push(const T&);
-     T pop();
-     void print()const;
-     void insert(vector<int>&, int);
-     void remove(vector<int>&, int) {
-
- private:
-     TPQueue::SYM* create(const T&);
-     void ChangeElements(int*, int*);
-     void sort(vector<int>&, int);
-     SYM* head;
-     SYM* tail;
-};
+    // реализация шаблона очереди с приоритетом на связанном списке
+public:
+    PQueue() :head(nullptr), tail(nullptr) {};
+    ~TPQueue();
+    void push(const T&);
+    T pop();
+    void print()const;
+    //добавление
+    void insert(int element);
+    //удалить
+    void remove(const TPQueue&, int);
+private:
+    TPQueue::SYM* create(const T&);
+    void ChangeElements(int*, int*);
+    void sort(const TPQueue&, int);
+    SYM* head;
+    SYM* tail;
+}
 
 struct SYM {
-  char ch;
-  int prior;
+    char ch;
+    int prior;
 };
 
-template<typename T>
+template<class T>
 typename TPQueue<T>::SYM* TPQueue<T>::create(const T& data) {
     SYM* sb = new SYM;
     sb->data = data;
@@ -38,45 +39,47 @@ typename TPQueue<T>::SYM* TPQueue<T>::create(const T& data) {
     return sb;
 }
 
-template<typename T>
+template<class T>
 TPQueue<T>::~TPQueue() {
     while (head) {
         pop();
     }
 }
 
-template<typename T>
+template<class T>
 void TPQueue<T>::push(const T& data) {
     if (tail && head) {
         tail->next = create(data);
         tail = tail->next;
-    } else {
+    }
+    else {
         head = create(data);
         tail = head;
     }
 }
 
-template<typename T>
+template<class T>
 T TPQueue<T>::pop() {
     if (head) {
         SYM* tmp = head->next;
         T data = head->data;
         head = tmp;
         return data;
-    } else {
+    }
+    else {
         throw std::string("Empty!");
     }
 }
 
-template<typename T>
+template<class T>
 void TPQueue<T>::ChangeElements(int* a, int* b) {
     int tmp = *b;
     *b = *a;
     *a = tmp;
 }
 
-template<typename T>
-void TPQueue<T>::sort(vector<int>& parent, int i) {
+template<class T>
+void TPQueue<T>::sort(const TPQueue<T>& parent, int i) {
     int size = parent.size();
     int largest = i;
     int leftchild = 2 * i + 1;
@@ -93,21 +96,24 @@ void TPQueue<T>::sort(vector<int>& parent, int i) {
     }
 }
 
-template<typename T>
-void TPQueue<T>::insert(vector<int>& parent, int newEl) {
-    int size = parent.size();
-    if (size == 0) {
-        parent.push_back(newEl);
+template<class T>
+void TPQueue<T>::insert(int element) {
+    SYM* newElement = new SYM; //создали новый узел
+    newElement->ch = element;
+    newElement->nest = nullptr; //новый узел в конце
+    if (head == nullptr) {
+        head = newElement;
     } else {
-        parent.push_back(newEl);
-        for (int i = size / 2 - 1; i >= 0; i--) {
-            sort(parent, i);
+        SYM* tail = head;
+        while (tail->next != nullptr) {
+            tail = tail->next;
         }
+        tail->next = newElement;
     }
 }
 
-template<typename T>
-void TPQueue<T>::remove(vector<int>& parent, int element) {
+template<class T>
+void TPQueue<T>::remove(const TPQueue<T>& parent, int element) {
     int size = parent.size();
     int i;
     for (int i = 0; i < size; i++) {
@@ -120,7 +126,7 @@ void TPQueue<T>::remove(vector<int>& parent, int element) {
 
     parent.pop_back();
     for (int i = size / 2 - 1; i >= 0; i--) {
-        sort(parent, i);
+        sorting(parent, i);
     }
 }
 
