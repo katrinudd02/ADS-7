@@ -25,15 +25,14 @@ class TPQueue {
      void sort(const TPQueue&, int);
      SYM* head;
      SYM* tail;
+ struct SYM {
+     char ch;
+     int prior;
+ };
 }
 
-struct SYM {
-    char ch;
-    int prior;
-};
-
 template<class T>
-typename TPQueue<T>::create(const T& data) {
+typename TPQueue<T>::SYM*TPQueue<T>::create(const T& data) {
     SYM* sb = new SYM;
     sb->data = data;
     sb->next = nullptr;
