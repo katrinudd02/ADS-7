@@ -10,7 +10,7 @@ template<class T>
 class TPQueue {
     // реализация шаблона очереди с приоритетом на связанном списке
  public:
-     PQueue()::head(nullptr), tail(nullptr) {}
+     TPQueue()::head(nullptr), tail(nullptr) {};
      ~TPQueue();
      void push(const T&);
      T pop();
