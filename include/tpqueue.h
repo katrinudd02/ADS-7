@@ -4,26 +4,27 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 template<class T>
 class TPQueue {
     // реализация шаблона очереди с приоритетом на связанном списке
-public:
-    PQueue() :head(nullptr), tail(nullptr) {};
-    ~TPQueue();
-    void push(const T&);
-    T pop();
-    void print()const;
+ public:
+     PQueue()::head(nullptr), tail(nullptr) {}
+     ~TPQueue();
+     void push(const T&);
+     T pop();
+     void print()const;
     //добавление
-    void insert(int element);
+     void insert(int element);
     //удалить
-    void remove(const TPQueue&, int);
-private:
-    TPQueue::SYM* create(const T&);
-    void ChangeElements(int*, int*);
-    void sort(const TPQueue&, int);
-    SYM* head;
-    SYM* tail;
+     void remove(const TPQueue&, int);
+ private:
+     TPQueue::SYM* create(const T&);
+     void ChangeElements(int*, int*);
+     void sort(const TPQueue&, int);
+     SYM* head;
+     SYM* tail;
 }
 
 struct SYM {
@@ -51,8 +52,7 @@ void TPQueue<T>::push(const T& data) {
     if (tail && head) {
         tail->next = create(data);
         tail = tail->next;
-    }
-    else {
+    } else {
         head = create(data);
         tail = head;
     }
@@ -65,8 +65,7 @@ T TPQueue<T>::pop() {
         T data = head->data;
         head = tmp;
         return data;
-    }
-    else {
+    } else {
         throw std::string("Empty!");
     }
 }
@@ -126,7 +125,7 @@ void TPQueue<T>::remove(const TPQueue<T>& parent, int element) {
 
     parent.pop_back();
     for (int i = size / 2 - 1; i >= 0; i--) {
-        sorting(parent, i);
+        sort(parent, i);
     }
 }
 
