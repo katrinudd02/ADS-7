@@ -81,14 +81,14 @@ void TPQueue<T>::push(const T& data) {
 
 template<class T>
 T TPQueue<T>::pop() {
-    if (head) {
-        SYM* tmp = head->next;
-        T data = head->data;
-        head = tmp;
-        return data;
-    } else {
-        throw std::string("Empty!");
+    SYM* tmp = head->next;
+    if (tmp) {
+        tmp->prev = nullptr;
     }
+    T data = head->data;
+    delete head;
+    head = tmp;
+    return data;
 }
 
 //template<class T>
