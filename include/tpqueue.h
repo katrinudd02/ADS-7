@@ -8,6 +8,11 @@
 
 template<class T>
 class TPQueue {
+ public:
+     struct SYM {
+         char ch;
+         int prior;
+     };
     // реализация шаблона очереди с приоритетом на связанном списке
  public:
      TPQueue():head(nullptr), tail(nullptr) {}
@@ -25,10 +30,6 @@ class TPQueue {
      void sort(const TPQueue&, int);
      SYM* head;
      SYM* tail;
- struct SYM {
-     char ch;
-     int prior;
- };
 }
 
 template<class T>
